@@ -1,4 +1,4 @@
-import { getContext, drawNext } from './board';
+import { getContext, getBackgroundCanvas, drawNext } from './board';
 import { createSnake } from './objects';
 import { handleKeyPressed } from './listeners';
 
@@ -7,7 +7,9 @@ const game = () => {
     const context = getContext('canvas');
     const snake = createSnake();
 
-    drawNext(context, snake);
+    const background = getBackgroundCanvas();
+
+    drawNext(context, background, snake);
 
     document.addEventListener('keydown', event => {
       handleKeyPressed(event, snake);

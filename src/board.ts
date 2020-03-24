@@ -1,4 +1,5 @@
 import { nextSnakePositions } from './objects';
+import { config } from './config';
 
 export const getContext = (canvasId: string): CanvasRenderingContext2D => {
   const canvas = document.getElementById(canvasId);
@@ -16,21 +17,56 @@ export const position2coordinates = (
   position: BoardPosition,
 ): BoardCoordinate => {
   const coordinates: BoardCoordinate = {
-    x: position.xIndex * 16,
-    y: position.yIndex * 16,
+    x: position.xIndex * config.board.tileSize,
+    y: position.yIndex * config.board.tileSize,
   };
 
   return coordinates;
 };
 
-export const drawNext = (context: CanvasRenderingContext2D, snake: Snake) => {
+const drawBackground = (context: CanvasRenderingContext2D): void => {
+  context.fillStyle = 'white';
+  context.fillRect(
+    0,
+    0,
+    config.board.width * config.board.tileSize,
+    config.board.height * config.board.tileSize,
+  );
+};
+
+export const getBackgroundCanvas = (): HTMLCanvasElement => {
+  const canvas = document.createElement('canvas');
+  canvas.width = config.board.width * config.board.tileSize;
+  canvas.height = config.board.height * config.board.tileSize;
+
+  const context = <CanvasRenderingContext2D>canvas.getContext('2d');
+  drawBackground(context);
+
+  return canvas;
+};
+
+export const drawNext = (
+  context: CanvasRenderingContext2D,
+  background: HTMLCanvasElement,
+  snake: Snake,
+) => {
   snake.positions = nextSnakePositions(snake.positions, snake.direction);
+
+  context.drawImage(background, 0, 0);
 
   snake.positions.forEach((position, index) => {
     const coordinates = position2coordinates(position);
     context.fillStyle = snake.parts[index].color;
-    context.fillRect(coordinates.x, coordinates.y, 16, 16);
+    context.fillRect(
+      coordinates.x,
+      coordinates.y,
+      config.board.tileSize,
+      config.board.tileSize,
+    );
   });
 
-  setTimeout(() => requestAnimationFrame(() => drawNext(context, snake)), 100);
+  setTimeout(
+    () => requestAnimationFrame(() => drawNext(context, background, snake)),
+    100,
+  );
 };
