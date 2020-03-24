@@ -1,3 +1,5 @@
+import { nextSnakePositions } from './objects';
+
 export const getContext = (canvasId: string): CanvasRenderingContext2D => {
   const canvas = document.getElementById(canvasId);
   if (!(canvas instanceof HTMLCanvasElement))
@@ -10,25 +12,25 @@ export const getContext = (canvasId: string): CanvasRenderingContext2D => {
   return context;
 };
 
-export const position2coordinate = (
+export const position2coordinates = (
   position: BoardPosition,
 ): BoardCoordinate => {
-  const coordinate: BoardCoordinate = {
+  const coordinates: BoardCoordinate = {
     x: position.xIndex * 16,
     y: position.yIndex * 16,
   };
 
-  return coordinate;
+  return coordinates;
 };
 
-export const drawSnake = (
-  snake: Snake,
-  context: CanvasRenderingContext2D,
-): void => {
-  for (let i = 0; i < snake.positions.length; i += 1) {
-    const coordinate = position2coordinate(snake.positions[i]);
+export const drawNext = (context: CanvasRenderingContext2D, snake: Snake) => {
+  snake.positions = nextSnakePositions(snake.positions, snake.direction);
 
-    context.fillStyle = snake.parts[i].color;
-    context.fillRect(coordinate.x, coordinate.y, 16, 16);
-  }
+  snake.positions.forEach((position, index) => {
+    const coordinates = position2coordinates(position);
+    context.fillStyle = snake.parts[index].color;
+    context.fillRect(coordinates.x, coordinates.y, 16, 16);
+  });
+
+  setTimeout(() => requestAnimationFrame(() => drawNext(context, snake)), 100);
 };
