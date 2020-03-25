@@ -1,14 +1,10 @@
+import { randomUnoccupiedPosition } from './board';
 import { drawBackground } from './drawing';
 import { config } from './config';
 
 export const createSnake = (): Snake => {
-  const position: BoardPosition = {
-    xIndex: Math.floor(Math.random() * 10),
-    yIndex: Math.floor(Math.random() * 10),
-  };
-
+  const position = randomUnoccupiedPosition();
   const part: SnakePart = { color: 'red' };
-
   const direction = undefined;
 
   return {
@@ -30,10 +26,7 @@ export const createBackground = (): HTMLCanvasElement => {
 };
 
 export const createFood = (): Food => {
-  const position: BoardPosition = {
-    xIndex: Math.floor(Math.random() * 10),
-    yIndex: Math.floor(Math.random() * 10),
-  };
+  const position = randomUnoccupiedPosition();
 
   return { position };
 };

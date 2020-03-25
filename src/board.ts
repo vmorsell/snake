@@ -22,3 +22,29 @@ export const position2coordinates = (
 
   return coordinates;
 };
+
+export const randomUnoccupiedPosition = (
+  snake?: Snake,
+  foods?: Array<Food>,
+): BoardPosition => {
+  const snakePositions = snake ? snake.positions : [];
+  const foodPositions = foods ? foods.map(food => food.position) : [];
+  const occupied: Array<BoardPosition> = [...snakePositions, ...foodPositions];
+
+  const randomize = (occupied: Array<BoardPosition>): BoardPosition => {
+    const randomPosition: BoardPosition = {
+      xIndex: Math.floor(Math.random() * config.board.width),
+      yIndex: Math.floor(Math.random() * config.board.height),
+    };
+
+    const exists = occupied.some(
+      position =>
+        position.xIndex === randomPosition.xIndex &&
+        position.yIndex === randomPosition.yIndex,
+    );
+
+    return !exists ? randomPosition : randomize(occupied);
+  };
+
+  return randomize(occupied);
+};
