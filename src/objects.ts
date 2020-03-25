@@ -19,6 +19,10 @@ export const nextSnakePositions = (
   positions: Array<BoardPosition>,
   direction: 'UP' | 'DOWN' | 'LEFT' | 'RIGHT' | undefined,
 ): Array<BoardPosition> => {
+  if (!direction) {
+    return positions;
+  }
+
   const offset = {
     xIndex: (direction === 'LEFT' && -1) || (direction === 'RIGHT' && 1) || 0,
     yIndex: (direction === 'UP' && -1) || (direction === 'DOWN' && 1) || 0,
