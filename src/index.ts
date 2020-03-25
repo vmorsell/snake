@@ -1,15 +1,25 @@
-import { getContext, getBackgroundCanvas, drawNext } from './board';
-import { createSnake } from './objects';
+import { getContext } from './board';
+import { draw } from './drawing';
+import {
+  createSnake,
+  createBackground,
+  nextSnakePositions,
+} from './components';
 import { handleKeyPressed } from './listeners';
 
 const game = () => {
   try {
     const context = getContext('canvas');
+
     const snake = createSnake();
+    const background = createBackground();
 
-    const background = getBackgroundCanvas();
-
-    drawNext(context, background, snake);
+    setInterval(() => {
+      requestAnimationFrame(() => {
+        snake.positions = nextSnakePositions(snake);
+        draw(context, background, snake);
+      });
+    }, 100);
 
     document.addEventListener('keydown', event => {
       handleKeyPressed(event, snake);
