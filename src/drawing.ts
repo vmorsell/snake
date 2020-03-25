@@ -15,12 +15,25 @@ export const draw = (
   context: CanvasRenderingContext2D,
   background: HTMLCanvasElement,
   snake: Snake,
+  foods: Array<Food>,
 ) => {
   context.drawImage(background, 0, 0);
 
   snake.positions.forEach((position, index) => {
     const coordinates = position2coordinates(position);
     context.fillStyle = snake.parts[index].color;
+    context.fillRect(
+      coordinates.x,
+      coordinates.y,
+      config.board.tileSize,
+      config.board.tileSize,
+    );
+  });
+
+  foods.forEach(food => {
+    const coordinates = position2coordinates(food.position);
+
+    context.fillStyle = 'green';
     context.fillRect(
       coordinates.x,
       coordinates.y,

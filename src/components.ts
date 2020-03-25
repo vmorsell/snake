@@ -29,6 +29,15 @@ export const createBackground = (): HTMLCanvasElement => {
   return canvas;
 };
 
+export const createFood = (): Food => {
+  const position: BoardPosition = {
+    xIndex: Math.floor(Math.random() * 10),
+    yIndex: Math.floor(Math.random() * 10),
+  };
+
+  return { position };
+};
+
 export const nextSnakePositions = (snake: Snake): Array<BoardPosition> => {
   if (!snake.direction) {
     return snake.positions;

@@ -3,6 +3,7 @@ import { draw } from './drawing';
 import {
   createSnake,
   createBackground,
+  createFood,
   nextSnakePositions,
 } from './components';
 import { handleKeyPressed } from './listeners';
@@ -13,11 +14,17 @@ const game = () => {
 
     const snake = createSnake();
     const background = createBackground();
+    const foods: Array<Food> = [];
 
     setInterval(() => {
       requestAnimationFrame(() => {
+        if (Math.random() > 0.95) {
+          const food = createFood();
+          foods.push(food);
+        }
+
         snake.positions = nextSnakePositions(snake);
-        draw(context, background, snake);
+        draw(context, background, snake, foods);
       });
     }, 100);
 

@@ -17,3 +17,7 @@ interface Snake {
   parts: Array<SnakePart>;
   direction: 'UP' | 'DOWN' | 'LEFT' | 'RIGHT' | undefined;
 }
+
+interface Food {
+  position: BoardPosition;
+}
