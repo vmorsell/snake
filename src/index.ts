@@ -32,11 +32,9 @@ const game = () => {
         );
 
         if (ateFoodIndex !== -1) {
-          foods.splice(ateFoodIndex, 1);
+          const eaten: Food = foods.splice(ateFoodIndex, 1)[0];
 
-          const snakePart: SnakePart = { color: 'blue' };
-
-          snake.parts.push(snakePart);
+          snake.parts.push(eaten.snakePart);
           snake.positions.push(snake.positions[snake.positions.length - 1]);
         }
 

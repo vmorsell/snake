@@ -28,7 +28,16 @@ export const createBackground = (): HTMLCanvasElement => {
 export const createFood = (snake: Snake, foods: Array<Food>): Food => {
   const position = randomUnoccupiedPosition(snake, foods);
 
-  return { position };
+  const colors = ['green', 'blue', 'yellow'];
+
+  const snakePart: SnakePart = {
+    color: colors[Math.floor(Math.random() * colors.length)],
+  };
+
+  return {
+    position,
+    snakePart,
+  };
 };
 
 export const nextSnakePositions = (snake: Snake): Array<BoardPosition> => {

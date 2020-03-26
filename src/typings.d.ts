@@ -20,4 +20,5 @@ interface Snake {
 
 interface Food {
   position: BoardPosition;
+  snakePart: SnakePart;
 }

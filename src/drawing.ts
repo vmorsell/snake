@@ -33,7 +33,7 @@ export const draw = (
   foods.forEach(food => {
     const coordinates = position2coordinates(food.position);
 
-    context.fillStyle = 'green';
+    context.fillStyle = food.snakePart.color;
     context.fillRect(
       coordinates.x,
       coordinates.y,
