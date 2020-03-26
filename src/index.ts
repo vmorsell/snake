@@ -19,7 +19,7 @@ const game = () => {
     setInterval(() => {
       requestAnimationFrame(() => {
         if (Math.random() > 0.95) {
-          const food = createFood();
+          const food = createFood(snake, foods);
           foods.push(food);
         }
 

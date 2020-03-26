@@ -25,8 +25,8 @@ export const createBackground = (): HTMLCanvasElement => {
   return canvas;
 };
 
-export const createFood = (): Food => {
-  const position = randomUnoccupiedPosition();
+export const createFood = (snake: Snake, foods: Array<Food>): Food => {
+  const position = randomUnoccupiedPosition(snake, foods);
 
   return { position };
 };
